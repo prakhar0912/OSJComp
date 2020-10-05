@@ -1,6 +1,6 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads')
 var fs = require('fs');
-let file = "/server_assets/50mb(Binary)";
+let file = "/server_assets/okay.txt";
 if (isMainThread) {
     module.exports = async function timeConsumingOperationOnThreads(raw) {
         return new Promise((resolve, reject) => {

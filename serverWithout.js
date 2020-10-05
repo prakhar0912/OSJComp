@@ -1,7 +1,7 @@
 var http = require('http');
 // const timeConsumingOperationWithThreads = require('./heavy-computing-with-threads')
 var fs = require('fs');
-let file = '/server_assets/50mb(Binary)'
+let file = '/server_assets/okay.txt'
 http.createServer(async (req, res) => {
     // let result = await timeConsumingOperationWithThreads();
     fs.readFile(__dirname + file, 'utf8', function (err, data) {
