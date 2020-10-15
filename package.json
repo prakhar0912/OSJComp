@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "r2": "^2.0.1"
+    "r2": "^2.0.1",
+    "workerpool": "^6.0.2"
   }
 }

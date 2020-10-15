@@ -1,13 +1,14 @@
 const { Worker, isMainThread, parentPort } = require('worker_threads')
 var fs = require('fs');
-let file = "/server_assets/okay.txt";
+let file = "/server_assets/2mb";
 if (isMainThread) {
     module.exports = async function timeConsumingOperationOnThreads(raw) {
         return new Promise((resolve, reject) => {
-            const worker = new Worker(__filename, {
+            const worker = new WorkerPool(__filename, {
                 workerData: raw
-            })
-            worker.on('message', resolve)
+            }, 8)
+
+
             worker.on('error', reject)
             worker.on('exit', (code) => {
                 if (code !== 0) {
@@ -17,7 +18,9 @@ if (isMainThread) {
         })
     }
 } else {
-    fs.readFile(__dirname + file, 'utf8', function (err, data) {
-        parentPort.postMessage(data);
+    worker.on('message', () => {
+        fs.readFile(__dirname + file, 'utf8', function (err, data) {
+            parentPort.postMessage(data);
+        })
     })
 }

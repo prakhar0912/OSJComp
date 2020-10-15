@@ -1,8 +1,15 @@
 var http = require('http');
-const timeConsumingOperationWithThreads = require('./heavy-computing-with-threads')
+const workerpool = require('workerpool');
+const pool = workerpool.pool(__dirname + '/myworker.js');
+
 http.createServer(async (req, res) => {
-    let result = await timeConsumingOperationWithThreads();
-    res.writeHead(200, { 'Content-Type': 'application/force-download', 'Content-disposition': 'attachment; filename=file.txt' });
-    res.end(result);
-}).listen(8080, '127.0.0.1');
+    pool.exec('readFile')
+        .then((data) => {
+            res.end(data);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}).listen(8000, '127.0.0.1');
 console.log('Server running at http://127.0.0.1:8080/');
+
