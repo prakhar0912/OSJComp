@@ -8,10 +8,10 @@ let d = new Date();
 let t = d.getTime()
 
 let k = 0;
-let noFiles = 40
+let noFiles = 5
 
 for (let i = 0; i < noFiles; i++) {
-    let file = fs.createWriteStream(__dirname + "/client_folder/test" + i + ".txt");
+    let file = fs.createWriteStream(__dirname + "/client_folder/test" + i);
     let request = http.get(api, function (response) {
         let arst = response.pipe(file);
         arst.on('finish', () => {
@@ -19,7 +19,8 @@ for (let i = 0; i < noFiles; i++) {
             if (k == noFiles) {
                 let a = new Date();
                 let b = a.getTime() - t;
-                console.log(b)
+                console.log("Total Time: " + b + "ms");
+                console.log("Throughput: " + (noFiles / b));
             }
         })
     });

@@ -6,6 +6,7 @@ let file = "/server_assets/2mb"
 http.createServer(async (req, res) => {
     fs.readFile(__dirname + file, 'utf8', function (err, data) {
         res.end(data);
+        console.log("File Sent!")
     })
 
 }).listen(8000, '127.0.0.1');
